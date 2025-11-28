@@ -81,5 +81,24 @@ public class Animal {
         
         Animal an2 = new Animal(0.95, 0.2, 10, 2);
         System.out.println(an2);
+
+        System.out.println(an1.getReproRate());
+        System.out.println(an2.getReproRate());
+
+        System.out.println(an1.getLifeExpectancy());
+        System.out.println(an2.getLifeExpectancy());
+
+        System.out.println(an1.isAbleToReproduce());
+        System.out.println(an2.isAbleToReproduce());
+
+        System.out.println(an1.isAlive());
+        System.out.println(an2.isAlive());
+
+        System.out.println(an1.getAge());
+        an1.incrementAge();
+        System.out.println(an1.getAge());
+        System.out.println(an2.getAge());
+        an2.incrementAge();
+        System.out.println(an2.getAge());
     }
 }
