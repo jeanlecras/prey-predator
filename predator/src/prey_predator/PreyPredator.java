@@ -14,7 +14,12 @@ public class PreyPredator {
     int year = 0;
     
     PreyPredator() {
-        // TODO
+        for (int i=0; i<2500; i++) {
+            preys.add(new Prey());
+        }
+        for (int i=0; i<500; i++) {
+            predators.add(new Predator());
+        }
     }   
     
     PreyPredator(int npreys, int npred) {
@@ -74,7 +79,6 @@ public class PreyPredator {
         }
         
         /* age increment and death of animals */
-        // TODO
         this.year++;
         preys.stream().forEach(Prey::incrementAge); // applique une méthode à tous les objets de la liste
         predators.stream().forEach(Predator::incrementAge);
@@ -89,7 +93,11 @@ public class PreyPredator {
         return s;
     }
     
+    /**
+     * Permet générer un fichier csv avec l'évolution du nombre de proies et de prédateur en fonction de l'année (utile pour générer des graphiques)
+     */
     public void getData(String filePath) throws IOException {        
+        int nyears = 1000;
         int npreys = 2500;
         int npred = 500;
         double avrPrey = 0.9;
@@ -107,9 +115,9 @@ public class PreyPredator {
         
         PreyPredator pp = new PreyPredator(npreys, npred, avrPrey, sdrPrey, avlPrey, sdlPrey, avePrey, sdePrey, avrPred, sdrPred, avlPred, sdlPred, avaPred, sdaPred);        
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write("predators,preys");
-            for (int y=0; y<1000; y++) {
-                writer.write(predators.size()+","+preys.size());
+            writer.write("year,predators,preys");
+            for (int y=0; y<nyears; y++) {
+                writer.write(y+","+predators.size()+","+preys.size());
                 writer.newLine();
                 pp.oneYear();
             }

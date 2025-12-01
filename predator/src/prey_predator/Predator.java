@@ -8,7 +8,7 @@ public class Predator extends Animal {
     private double attackRate;
     
     Predator() {
-        super(0.4, 0.1, 12.0, 3.0);
+        super(0.4, 0.1, 12.0, 3.0); // appel du constructeur de la classe Animal
         Random r = new Random();
         do {
             attackRate = r.nextGaussian()*stdDevAttackRate + averageAttackRate;
@@ -39,7 +39,7 @@ public class Predator extends Animal {
     }
     
     public String toString() {
-        String s = super.toString();
+        String s = super.toString(); // appel de la méthode toString de la classe Animal
         s += "Taux d'attaque : " + this.attackRate+"\n" ;
         return s;
     }

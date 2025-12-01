@@ -16,17 +16,17 @@ public class Animal {
     Animal() {
         Random r = new Random();
         
-        do {
+        do { // même si le taux de reproduction moyen est positif, il peut arriver que le taux de reproduction négatif d'après la loi normale
             reproductionRate = r.nextGaussian()*stdDevReproductionRate + averageReproductionRate;
             lifeExpectancy = r.nextGaussian()*stdDevLifeExpectancy + averageLifeExpectancy;
-            age = (int)(r.nextDouble() * this.lifeExpectancy);
+            age = (int)(r.nextDouble() * this.lifeExpectancy); // permet de générer un nombre compris en 0 et espérance de vie
         } while (reproductionRate <= 0 || reproductionRate >= 1  || lifeExpectancy <= 0);
     }
     
     Animal(double averageReproductionRate, double stdDevReproductionRate, double averageLifeExpectancy, double stdDevLifeExpectancy) throws IllegalArgumentException{
-        if (averageReproductionRate <= 0 || averageReproductionRate >= 1  || averageLifeExpectancy <= 0) {
-            throw(new IllegalArgumentException("La moyenne du taux de reproduction doit être comprise entre 0 et 1, la moyenne de l'espérance de vie doit être supérieur à 0"));
-        }
+        if (averageReproductionRate <= 0 || averageReproductionRate >= 1  || averageLifeExpectancy <= 0 || stdDevReproductionRate < 0 || stdDevLifeExpectancy < 0) {
+            throw(new IllegalArgumentException("La moyenne du taux de reproduction doit être comprise entre 0 et 1, la moyenne de l'espérance de vie doit être supérieur à 0, un écart-type doit être positif"));
+        } // l'utilisateur n'a pas le droit de donner une moyenne ou d'écaart-type négatif
         this.averageLifeExpectancy = averageLifeExpectancy;
         this.stdDevLifeExpectancy = stdDevLifeExpectancy;
         this.averageReproductionRate = averageReproductionRate;

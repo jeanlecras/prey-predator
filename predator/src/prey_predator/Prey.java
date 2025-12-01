@@ -8,7 +8,7 @@ public class Prey extends Animal {
     private double escapeRate;
     
     Prey() {
-        super(0.9, 0.1, 10.0, 1.0);
+        super(0.9, 0.1, 10.0, 1.0); // appel de constructeur de la classe Animal
         Random r = new Random();
         do {
             escapeRate = r.nextGaussian()*stdDevEscapeRate + averageEscapeRate;
@@ -17,7 +17,7 @@ public class Prey extends Animal {
     
     Prey(double avr, double sdr, double avl, double sdl, double ave, double sde) throws IllegalArgumentException {
         super(avr, sdr, avl, sdl);
-        if (ave <= 0 || ave >= 1) {
+        if (ave <= 0 || ave >= 1 || sde < 0) {
             throw(new IllegalArgumentException("La moyenne de la capacité d'échappement doit être comprise entre 0 et 1"));
         }
         Random r = new Random();
@@ -35,7 +35,7 @@ public class Prey extends Animal {
     }
     
     public String toString() {
-        String s = super.toString();
+        String s = super.toString(); // appel de la méthode toString de la classe Animal
         s += "Capacité d'échappement : " + this.escapeRate+"\n" ;
         return s ;
     }
