@@ -11,7 +11,7 @@ public class Animal {
     
     private int age;
     private double reproductionRate;
-    private double lifeExpectancy;
+    protected double lifeExpectancy; //doit être en protected pour implémenter la méthode starvation dans la classe Predator
     
     Animal() {
         Random r = new Random();
@@ -25,7 +25,7 @@ public class Animal {
     
     Animal(double averageReproductionRate, double stdDevReproductionRate, double averageLifeExpectancy, double stdDevLifeExpectancy) throws IllegalArgumentException{
         if (averageReproductionRate <= 0 || averageReproductionRate >= 1  || averageLifeExpectancy <= 0) {
-            throw(new IllegalArgumentException("La moyenne du taux de reproduction doit être comrpise entre 0 et 1, la moyenne de l'espérance de vie doit être supérieur à 0"));
+            throw(new IllegalArgumentException("La moyenne du taux de reproduction doit être comprise entre 0 et 1, la moyenne de l'espérance de vie doit être supérieur à 0"));
         }
         this.averageLifeExpectancy = averageLifeExpectancy;
         this.stdDevLifeExpectancy = stdDevLifeExpectancy;
@@ -81,7 +81,7 @@ public class Animal {
         
         Animal an2 = new Animal(0.95, 0.2, 10, 2);
         System.out.println(an2);
-
+        
         System.out.println(an1.getReproRate());
         System.out.println(an2.getReproRate());
 
