@@ -87,7 +87,7 @@ public class PreyPredator {
     }
     
     public String toString() {
-        String s = "*****" + "Année "+year+"*****+"\n"";
+        String s = "*****" + "Année "+year+"*****"+"\n";
         s += "Nombre de prédateurs "+predators.size()+"\n";
         s += "Nombre de proies "+preys.size()+"\n";
         return s;
@@ -116,14 +116,15 @@ public class PreyPredator {
         double sdePrey = 0.1;
         double avrPred = 0.9;
         double sdrPred = 0.1;
-        double avlPred = 0.4;
-        double sdlPred = 0.1;
-        double avaPred = 12;
-        double sdaPred = 3;
+        double avlPred = 12;
+        double sdlPred = 3;
+        double avaPred = 0.4;
+        double sdaPred = 0.1;
         
         PreyPredator pp = new PreyPredator(npreys, npred, avrPrey, sdrPrey, avlPrey, sdlPrey, avePrey, sdePrey, avrPred, sdrPred, avlPred, sdlPred, avaPred, sdaPred);        
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("year,predators,preys");
+            writer.newLine();
             for (int y=0; y<nyears; y++) {
                 writer.write(y+","+pp.getPreds().size()+","+pp.getPreys().size());
                 writer.newLine();
