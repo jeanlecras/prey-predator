@@ -87,16 +87,24 @@ public class PreyPredator {
     }
     
     public String toString() {
-        String s = "*****" + "Année "+year+"\n"+"*****";
+        String s = "*****" + "Année "+year+"*****+"\n"";
         s += "Nombre de prédateurs "+predators.size()+"\n";
         s += "Nombre de proies "+preys.size()+"\n";
         return s;
     }
+   
+    public List<Prey> getPreys() {
+        return this.preys;
+    }
     
+    public Set<Predator> getPreds() {
+        return this.predators;
+    }
+
     /**
      * Permet générer un fichier csv avec l'évolution du nombre de proies et de prédateur en fonction de l'année (utile pour générer des graphiques)
      */
-    public void getData(String filePath) throws IOException {        
+    public static void getData(String filePath) throws IOException {        
         int nyears = 1000;
         int npreys = 2500;
         int npred = 500;
@@ -117,7 +125,7 @@ public class PreyPredator {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("year,predators,preys");
             for (int y=0; y<nyears; y++) {
-                writer.write(y+","+predators.size()+","+preys.size());
+                writer.write(y+","+pp.getPreds().size()+","+pp.getPreys().size());
                 writer.newLine();
                 pp.oneYear();
             }
