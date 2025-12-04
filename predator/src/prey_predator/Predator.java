@@ -54,10 +54,16 @@ public class Predator extends Animal {
         System.out.println("Test canAttack :\n");
         System.out.println(p2.canAttack()+" "+p2.canAttack()+" "+p2.canAttack()+" "+p2.canAttack()+" "+p2.canAttack()+" "+p2.canAttack()+" ");
         
+        
         p2.starvation();
         System.out.println("Après starvation :\n"+p2);
-        
+
         System.out.println("Test isAlive :\n");
         System.out.println(p2.isAlive());
+        System.out.println(p2.getAttackRate());
+
+        
+        
+        
     }
 }

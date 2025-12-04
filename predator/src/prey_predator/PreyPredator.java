@@ -87,7 +87,7 @@ public class PreyPredator {
     }
     
     public String toString() {
-        String s = "Année "+year+"\n";
+        String s = "*****" + "Année "+year+"\n"+"*****";
         s += "Nombre de prédateurs "+predators.size()+"\n";
         s += "Nombre de proies "+preys.size()+"\n";
         return s;
