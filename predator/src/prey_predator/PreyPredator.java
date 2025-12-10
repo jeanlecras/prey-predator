@@ -31,7 +31,10 @@ public class PreyPredator {
         }
     }
     
-    PreyPredator(int npreys, int npred, double avrPrey, double sdrPrey, double avlPrey, double sdlPrey, double avePrey, double sdePrey, double avrPred, double sdrPred, double avlPred, double sdlPred, double avaPred, double sdaPred) {
+    PreyPredator(int npreys, int npred, double avrPrey, double sdrPrey, double avlPrey, double sdlPrey,
+                 double avePrey, double sdePrey, double avrPred, double sdrPred, double avlPred,
+                 double sdlPred, double avaPred, double sdaPred) {
+
         for (int i=0; i<npreys; i++) {
             preys.add(new Prey(avrPrey, sdrPrey, avlPrey, sdlPrey, avePrey, sdePrey));
         }
@@ -64,25 +67,48 @@ public class PreyPredator {
             preys.add(b);
         }
         
+
         /* lunch time */
         Random r = new Random();
+        final int MAX_ATTACKS = 2; // ou 1 si tu veux exactement l’ancien comportement
+
         for (Predator predator : predators) {
-            if (predator.canAttack()) {
-                int preyIndex = r.nextInt(preys.size());
-                Prey prey = preys.get(preyIndex);
-                if (prey.isAbleToEscape()) {
+
+            for (int k = 0; k < MAX_ATTACKS; k++) {
+
+                // sécurité : plus aucune proie
+                if (preys.isEmpty()) {
                     predator.starvation();
-                } else {
-                    preys.remove(prey);
+                    break;
+                }
+
+                if (predator.canAttack()) {
+
+                    int preyIndex = r.nextInt(preys.size());  // ← plus jamais d’erreur ici
+                    Prey prey = preys.get(preyIndex);
+
+                    if (prey.isAbleToEscape()) {
+                        predator.starvation();
+                    } else {
+                        preys.remove(preyIndex);
+
+                        // re-sécurité après suppression
+                        if (preys.isEmpty()) break;
+
+                        break; // il a mangé → stop
+                    }
                 }
             }
         }
-        
+
+
+
+
         /* age increment and death of animals */
         this.year++;
-        preys.stream().forEach(Prey::incrementAge); // applique une méthode à tous les objets de la liste
+        preys.stream().forEach(Prey::incrementAge);
         predators.stream().forEach(Predator::incrementAge);
-        predators.removeIf(p -> !p.isAlive()); // on ne peut pas supprimer des éléments de la liste en la parcourant alors on utilise removeIf
+        predators.removeIf(p -> !p.isAlive());
         preys.removeIf(p -> !p.isAlive());
     }
     
@@ -102,12 +128,13 @@ public class PreyPredator {
     }
 
     /**
-     * Permet générer un fichier csv avec l'évolution du nombre de proies et de prédateur en fonction de l'année (utile pour générer des graphiques)
+     * Permet générer un fichier csv avec l'évolution du nombre de proies et de prédateur
+     * en fonction de l'année (utile pour générer des graphiques)
      */
     public static void getData(String filePath) throws IOException {        
         int nyears = 1000;
-        int npreys = 2500;
-        int npred = 500;
+        int npreys = 3000;
+        int npred = 800;
         double avrPrey = 0.9;
         double sdrPrey = 0.1;
         double avlPrey = 8.0;
@@ -121,26 +148,33 @@ public class PreyPredator {
         double avaPred = 0.4;
         double sdaPred = 0.1;
         
-        PreyPredator pp = new PreyPredator(npreys, npred, avrPrey, sdrPrey, avlPrey, sdlPrey, avePrey, sdePrey, avrPred, sdrPred, avlPred, sdlPred, avaPred, sdaPred);        
+        PreyPredator pp = new PreyPredator(npreys, npred, avrPrey, sdrPrey, avlPrey, sdlPrey,
+                                           avePrey, sdePrey, avrPred, sdrPred, avlPred,
+                                           sdlPred, avaPred, sdaPred);        
+        
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("year,predators,preys");
             writer.newLine();
+
             for (int y=0; y<nyears; y++) {
-                writer.write(y+","+pp.getPreds().size()+","+pp.getPreys().size());
+
+                writer.write(y + "," + pp.getPreds().size() + "," + pp.getPreys().size());
                 writer.newLine();
+
+                // 🔥 on NE S'ARRÊTE PLUS JAMAIS : simulation jusqu'à 1000 ans garantie
+                // même si predators = 0 ou preys = 0
+                
                 pp.oneYear();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
     public static void main(String[] args) {
-        PreyPredator pp = new PreyPredator(2500, 500);
-        
-        for (int y=0; y<1000; y++) {
-            System.out.println(pp);
-            pp.oneYear();
+        try {
+            getData("simulation3.csv");
+            System.out.println("\nCSV généré : simulation.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

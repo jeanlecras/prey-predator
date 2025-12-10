@@ -3,19 +3,20 @@ import java.util.Random;
 
 public class Prey extends Animal {
     
-    private double averageEscapeRate = 0.7;
+    private double averageEscapeRate = 0.54;   
     private double stdDevEscapeRate = 0.1;
     private double escapeRate;
     
     Prey() {
-        super(0.9, 0.1, 10.0, 1.0); // appel de constructeur de la classe Animal
+        super(0.9, 0.1, 10.0, 1.0);
         Random r = new Random();
         do {
             escapeRate = r.nextGaussian()*stdDevEscapeRate + averageEscapeRate;
         } while(escapeRate <= 0 || escapeRate >= 1);
     }
     
-    Prey(double avr, double sdr, double avl, double sdl, double ave, double sde) throws IllegalArgumentException {
+    Prey(double avr, double sdr, double avl, double sdl, double ave, double sde)
+           throws IllegalArgumentException {
         super(avr, sdr, avl, sdl);
         if (ave <= 0 || ave >= 1 || sde < 0) {
             throw(new IllegalArgumentException("La moyenne de la capacité d'échappement doit être comprise entre 0 et 1"));
@@ -36,8 +37,8 @@ public class Prey extends Animal {
     
     public String toString() {
         String s = super.toString(); // appel de la méthode toString de la classe Animal
-        s += "Capacité d'échappement : " + this.escapeRate+"\n" ;
-        return s ;
+        s += "Capacité d'échappement : " + this.escapeRate + "\n";
+        return s;
     }
     
     public static void main(String args[]) {
@@ -48,9 +49,12 @@ public class Prey extends Animal {
         System.out.println(p2);
         
         System.out.println("Test isAbleToEscape :\n");
-        System.out.println(p2.isAbleToEscape()+" "+p2.isAbleToEscape()+" "+p2.isAbleToEscape()+" "+p2.isAbleToEscape()+" "+p2.isAbleToEscape()+" "+p2.isAbleToEscape()+" ");
+        System.out.println(
+            p2.isAbleToEscape()+" "+p2.isAbleToEscape()+" "+p2.isAbleToEscape()+" "+
+            p2.isAbleToEscape()+" "+p2.isAbleToEscape()+" "+p2.isAbleToEscape()
+        );
         
-        System.out.println("Test isAlive :\n");
+        System.out.println("\nTest isAlive :");
         System.out.println(p2.isAlive());
     }
 }
