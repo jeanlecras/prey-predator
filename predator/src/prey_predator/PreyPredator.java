@@ -70,39 +70,27 @@ public class PreyPredator {
 
         /* lunch time */
         Random r = new Random();
-        final int MAX_ATTACKS = 2; // ou 1 si tu veux exactement l’ancien comportement
-
+        final int MAX_ATTACKS = 2; 
         for (Predator predator : predators) {
-
             for (int k = 0; k < MAX_ATTACKS; k++) {
-
                 // sécurité : plus aucune proie
                 if (preys.isEmpty()) {
                     predator.starvation();
                     break;
                 }
-
                 if (predator.canAttack()) {
-
-                    int preyIndex = r.nextInt(preys.size());  // ← plus jamais d’erreur ici
+                    int preyIndex = r.nextInt(preys.size());  
                     Prey prey = preys.get(preyIndex);
-
                     if (prey.isAbleToEscape()) {
                         predator.starvation();
                     } else {
                         preys.remove(preyIndex);
-
-                        // re-sécurité après suppression
                         if (preys.isEmpty()) break;
-
                         break; // il a mangé → stop
                     }
                 }
             }
         }
-
-
-
 
         /* age increment and death of animals */
         this.year++;
@@ -133,8 +121,8 @@ public class PreyPredator {
      */
     public static void getData(String filePath) throws IOException {        
         int nyears = 1000;
-        int npreys = 3000;
-        int npred = 800;
+        int npreys = 2500;
+        int npred = 600;
         double avrPrey = 0.9;
         double sdrPrey = 0.1;
         double avlPrey = 8.0;
@@ -160,9 +148,6 @@ public class PreyPredator {
 
                 writer.write(y + "," + pp.getPreds().size() + "," + pp.getPreys().size());
                 writer.newLine();
-
-                // 🔥 on NE S'ARRÊTE PLUS JAMAIS : simulation jusqu'à 1000 ans garantie
-                // même si predators = 0 ou preys = 0
                 
                 pp.oneYear();
             }
@@ -171,7 +156,7 @@ public class PreyPredator {
     
     public static void main(String[] args) {
         try {
-            getData("simulation3.csv");
+            getData("simulation2.csv");
             System.out.println("\nCSV généré : simulation.csv");
         } catch (IOException e) {
             e.printStackTrace();

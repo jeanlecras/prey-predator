@@ -33,7 +33,7 @@ public class Predator extends Animal {
     }
     
     public void starvation() {
-        this.lifeExpectancy -= 1;   // ← SEULE MODIFICATION NÉCESSAIRE
+        this.lifeExpectancy -= 1;   
     }
     
     public String toString() {

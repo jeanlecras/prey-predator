@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Prey extends Animal {
     
-    private double averageEscapeRate = 0.54;   
+    private double averageEscapeRate = 0.55;   
     private double stdDevEscapeRate = 0.1;
     private double escapeRate;
     
